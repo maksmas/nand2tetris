@@ -1,0 +1,56 @@
+class Player {
+	field int x, y;
+	field int half;
+
+	constructor Player new(int Px, int Py, int Pwidth) {
+		let x = Px;
+		let y = Py;
+		let half = Pwidth / 2;
+		do draw(true);
+		return this;
+    }
+
+    method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+    }
+
+    method void draw(bool visible) {
+		do Screen.setColor(visible);
+
+		do Screen.drawRectangle(x - half, y - 1, x + half, y + 1);
+		return;
+    }
+
+    method void moveRight() {
+		if (x + half > 509) {
+			return;
+		}
+
+		do draw(false);
+		let x = x + 2;
+		do draw(true);
+
+		return;
+    }
+
+    method void moveLeft() {
+		if (x - half < 3) {
+			return;
+		}
+
+		do draw(false);
+		let x = x - 2;
+		do draw(true);
+
+		return;
+    }
+
+    method int getLeftXRange() {
+    	return x - half;
+    }
+
+    method int getRightXRange() {
+    	return x + half;	
+    }
+}

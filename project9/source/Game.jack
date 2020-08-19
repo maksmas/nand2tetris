@@ -1,0 +1,86 @@
+class Game {
+    field Player p1;
+    field Player p2;
+    field Ball ball;
+
+	constructor Game new() {
+		let p1 = Player.new(255, 1, 30);
+		let p2 = Player.new(255, 254, 30);
+		let ball = Ball.new(10, 10, 3, 1, 1);
+
+		return this;
+	}
+
+	method void dispose() {
+		do p1.dispose();
+		do p2.dispose();
+		do ball.dispose();
+		do Memory.deAlloc(this);
+		return;
+	}
+
+	method void run() {
+		var char key;
+		var boolean exit;
+		var bool checkForCollision;
+		var int lrange;
+		var int rrange;
+		var int bx;
+		var int by;
+		var int pwon;
+
+		let exit = false;
+		let pwon = 0;
+      
+		while (~exit) {
+			let key = Keyboard.keyPressed();
+         
+			if (key = 81)  { let exit = true; } // q key
+			if (key = 90)  { do p2.moveLeft(); } // z key
+			if (key = 88)  { do p2.moveRight(); } // x key
+
+			if (key = 130) { do p1.moveLeft(); } // left arrow
+			if (key = 132) { do p1.moveRight(); } // right arrow
+
+			let checkForCollision = ball.step();
+
+			if (checkForCollision) {
+				let by = ball.getY();
+				let bx = ball.getX();
+
+				if (by < 10) {
+					let lrange = p1.getLeftXRange();
+					let rrange = p1.getRightXRange(); 
+					let pwon = 2;
+				} else {
+					let lrange = p2.getLeftXRange();
+					let rrange = p2.getRightXRange(); 
+					let pwon = 1;
+				}
+
+				if ((bx < lrange) | (bx > rrange)) {
+					let exit = true;
+				} else {
+					let pwon = 0;
+				}
+			}
+			do Sys.wait(7);
+     	}
+
+     	do Screen.clearScreen();
+
+     	if (pwon = 0) {
+			do Output.printString("Draw");
+     	} else {
+	     	if (pwon = 1) {
+				do Output.printString("P1 won");
+	     	} else {
+				do Output.printString("P2 won");
+	     	}
+     	}
+
+     	do Sys.wait(5000);
+
+     	return;
+    }
+}

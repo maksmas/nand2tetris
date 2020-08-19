@@ -1,0 +1,14 @@
+class Main {
+	function void main() {
+		var Game g;
+
+		do Output.printString("Control P1 with arrows and P2 with z and x keys");
+		do Sys.wait(3000);
+		do Screen.clearScreen();
+		
+		let g = Game.new();
+		do g.run();
+		do g.dispose();
+		return;
+	}
+}

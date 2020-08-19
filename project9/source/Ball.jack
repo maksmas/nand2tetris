@@ -1,0 +1,64 @@
+class Ball {
+	field int x;
+	field int y;
+	field int radius;
+	field int dx;
+	field int dy;	
+
+    constructor Ball new(int Bx, int By, int Bradius, int Bdx, int Bdy) {
+		let x = Bx;
+		let y = By;
+		let dx = Bdx;
+		let dy = Bdy;
+		let radius = Bradius;
+		
+		do draw(true);
+		return this;
+	}
+
+	method void dispose() {
+		do Memory.deAlloc(this);
+		return;
+	}
+
+	method void draw(bool visible) {
+		do Screen.setColor(visible);
+		do Screen.drawCircle(x, y, radius);
+      	return;
+	}
+
+	method bool step() {
+		do draw(false);
+		let x = x + dx;
+		let y = y + dy;
+		do draw(true);
+
+		if ((x + radius) = 511) {
+			let dx = -dx;
+		}
+
+		if ((x - radius) = 1) {
+			let dx = -dx;
+		}
+
+		if ((y - radius) < 4) {
+			let dy = -dy;
+			return true;
+		}
+
+		if ((y + radius) > 252) {
+			let dy = -dy;
+			return true;
+		}
+
+		return false;
+	}
+
+	method int getY() {
+		return y;
+	}
+
+	method int getX() {
+		return x;
+	}
+}
