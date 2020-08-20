@@ -28,7 +28,7 @@ func main() {
 		ti := NewTokenIterator(tokens)
 		xmlEl := process(&ti)
 
-		treeOutputFile := strings.Replace(filename, ".jack", ".test.xml", 1)
+		treeOutputFile := strings.Replace(filename, ".jack", ".xml", 1)
 		writeSyntaxTree(xmlEl, treeOutputFile)
 	}
 }
